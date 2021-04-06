@@ -1,15 +1,19 @@
 	PRESERVE8
 	THUMB   
-		
+	include Driver/DriverJeuLaser.inc
 
-; ====================== zone de réservation de données,  ======================================
+; ====================== zone de rservation de donnes,  ======================================
 ;Section RAM (read only) :
 	area    mesdata,data,readonly
 
 
 ;Section RAM (read write):
 	area    maram,data,readwrite
-		
+	export CurrentIndex
+CurrentIndex	dcd	0
+	export SortieSon
+SortieSon	dcw	0
+	extern Son
 
 	
 ; ===============================================================================================
@@ -19,12 +23,41 @@
 		
 ;Section ROM code (read only) :		
 	area    moncode,code,readonly
-; écrire le code ici		
+; crire le code ici		
 
+	export timer4_callback
 
+timer4_callback proc
+; int current_index
+; int SortieSon
+; int *Son
 
+; SortieSon = *(Son + current_index) (OpÃ©ration de pointeur, se dÃ©caler de 2 octets pour s'aligner sur le son)
+;
+; if(current_index > 5512)
+;    current_index = 0;
+;
+	; Chargement de l'index
+	ldr r0, =CurrentIndex
+	ldr r1, [r0]
 
+	; Ajout de l'index  l'adresse de "Son", deux fois pour dcaler de 2 octets
+	ldr r2, =Son
+;	ldr r2, [r2]
+	add r2, r1
+	add r2, r1
 
-		
-		
+	; Lecture du son actuel
+	ldr r2, [r2]
+	
+	; Stockage du son actuel
+	ldr r3, =SortieSon
+	str r2, [r3]
+
+	; Incrment de CurrentIndex
+	add r1, #1
+	str r1, [r0]
+	
+	bx lr
+	endp
 	END	

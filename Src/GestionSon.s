@@ -48,7 +48,16 @@ timer4_callback proc
 	add r2, r1
 
 	; Lecture du son actuel
-	ldr r2, [r2]
+	ldrsh r2, [r2]
+
+	;Mise sur [0;719]
+	;on décale sur [0, 2^16] puis on divise par 2^16*719
+	ldr r3, =719 ;On met 719 dans r3
+	mul r2, r3	;On multiplie r2 par 719
+	asr r2, r2, #15 ;On divise r2 par 2^15
+	add r2, #719 ;On ajoute à r2 719
+	asr r2, r2, #1 ;On divise r2 par 2
+	
 	
 	; Stockage du son actuel
 	ldr r3, =SortieSon

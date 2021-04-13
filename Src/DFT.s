@@ -21,7 +21,64 @@
 	area    moncode,code,readonly
 ; écrire le code ici		
 
+;def DFT_ModuleAuCarre :
+;	M = 64
+;	SommeReelle = 0
+;	SommeImaginaire = 0
+;	for i in range(M) :
+;		SommeReelle += x[i] * cos(2 * pi * ((k * i)%M) / M)
+;		SommeImaginaire += x[i] * sin(2 * pi * ((k * i)%M) / M)
+;	return SommeReelle**2 + SommeImaginaire**2
 
+DFT_ModuleAuCarre proc
+	;r0 = #x[0] ;x[0]
+	;r1 = k ;k
+	;r2 = 0 ;i
+	;r3 = 0 ;SommeReelle
+	;r4 = 0 ;SommeImaginaire
+	;r5 = x[i]
+	;r6 = #cos ;TabCos
+	;r7 = #sin ;TabSin
+	;r8 = (k * i)%64
+	mov r9, #64 ;M
+	
+boucle
+	;Si r9 = 64 on a fini notre boucle
+	cmp r9, r2
+	bhs finBoucle
+
+	ldr r5, [r5, r2] ;x[i]
+
+	;Partie Reelle
+	ldr r0, [r6, r8] ;cos(2 * pi * k * i / M)
+	mul r10, r5 ;x[i] * cos(2 * pi * k * i / M)
+	add r3, r10; SommeReelle += X(k)
+
+	;Partie Imaginaire
+	ldr r0, [r7, r8] ;sin(2 * pi * k * i / M)
+	mul r10, r5 ;x[i] * sin(2 * pi * k * i / M)
+	add r4, r10; SommeImaginaire += X(k)
+
+	add r2, #1 ;i++
+
+	;On effectue l'opération de modulo 64 sur r8
+	add r8, r1
+	cmp r8, r9
+	blo boucle
+	sub r8, r9
+
+	b boucle
+
+finBoucle
+
+	;Mise au carré
+	mul r4, r4 ;Partie imaginaire au carré
+	mul r3, r3 ;Partie réelle au carré
+	add r0, r3, r4 ;Je mets le résultat dans le registre de retour
+	
+	bx lr
+	endp
+	END	
 
 
 
@@ -159,8 +216,3 @@ TabSin
 	DCW	-9512	; 61 0xdad8 -0.29028
 	DCW	-6393	; 62 0xe707 -0.19510
 	DCW	-3212	; 63 0xf374 -0.09802
-
-
-		
-		
-	END	

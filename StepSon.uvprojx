@@ -10,7 +10,7 @@
       <TargetName>Simu</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::.\ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -407,6 +407,31 @@
               <FileName>DriverJeuLaser.lib</FileName>
               <FileType>4</FileType>
               <FilePath>.\Driver\DriverJeuLaser.lib</FilePath>
+            </File>
+            <File>
+              <FileName>DriverJeuLaser.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Driver\DriverJeuLaser.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Son</GroupName>
+          <Files>
+            <File>
+              <FileName>bruitverre.asm</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Src\bruitverre.asm</FilePath>
+            </File>
+            <File>
+              <FileName>GestionSon.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Src\GestionSon.s</FilePath>
+            </File>
+            <File>
+              <FileName>GestionSon.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Src\GestionSon.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -419,7 +444,7 @@
       <TargetName>CibleSondeKEIL</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::.\ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -816,6 +841,31 @@
               <FileName>DriverJeuLaser.lib</FileName>
               <FileType>4</FileType>
               <FilePath>.\Driver\DriverJeuLaser.lib</FilePath>
+            </File>
+            <File>
+              <FileName>DriverJeuLaser.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Driver\DriverJeuLaser.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Son</GroupName>
+          <Files>
+            <File>
+              <FileName>bruitverre.asm</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Src\bruitverre.asm</FilePath>
+            </File>
+            <File>
+              <FileName>GestionSon.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Src\GestionSon.s</FilePath>
+            </File>
+            <File>
+              <FileName>GestionSon.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Src\GestionSon.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -897,7 +947,7 @@
       <TargetName>CibleSondeST</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::.\ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -1295,6 +1345,31 @@
               <FileType>4</FileType>
               <FilePath>.\Driver\DriverJeuLaser.lib</FilePath>
             </File>
+            <File>
+              <FileName>DriverJeuLaser.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Driver\DriverJeuLaser.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Son</GroupName>
+          <Files>
+            <File>
+              <FileName>bruitverre.asm</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Src\bruitverre.asm</FilePath>
+            </File>
+            <File>
+              <FileName>GestionSon.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Src\GestionSon.s</FilePath>
+            </File>
+            <File>
+              <FileName>GestionSon.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Src\GestionSon.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1322,12 +1397,7 @@
   <LayerInfo>
     <Layers>
       <Layer>
-        <LayName>&lt;Project Info&gt;</LayName>
-        <LayDesc></LayDesc>
-        <LayUrl></LayUrl>
-        <LayKeys></LayKeys>
-        <LayCat></LayCat>
-        <LayLic></LayLic>
+        <LayName>StepSon</LayName>
         <LayTarg>0</LayTarg>
         <LayPrjMark>1</LayPrjMark>
       </Layer>

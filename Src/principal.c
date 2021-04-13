@@ -1,6 +1,5 @@
 #include "DriverJeuLaser.h"
-
-void timer4_callback(void);
+#include "GestionSon.h"
 
 int main(void) {
 // ===========================================================================
@@ -18,6 +17,10 @@ int main(void) {
 //============================================================================	
 
 	while (1) {
-		
+		//10 million = 1 sec
+		for (int i = 0; i < 10000000; i++) {
+			i = i + 1 - 1;
+		}
+		StartSon();
 	}
 }

@@ -1,7 +1,7 @@
 	AREA Signal, DATA, READONLY
 	export LeSignal
-LeSignal
-	DCW	0x0fff	;  0 4095  0.99976
+LeSignal ; 4+12
+		DCW	0x0fff	;  0 4095  0.99976
 	DCW	0x0ff6	;  1 4086  0.99756
 	DCW	0x0fd9	;  2 4057  0.99048
 	DCW	0x0fa8	;  3 4008  0.97852

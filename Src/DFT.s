@@ -13,73 +13,6 @@
 
 	
 ; ===============================================================================================
-	
-
-
-		
-;Section ROM code (read only) :		
-	area    moncode,code,readonly
-; écrire le code ici		
-
-;def DFT_ModuleAuCarre :
-;	M = 64
-;	SommeReelle = 0
-;	SommeImaginaire = 0
-;	for i in range(M) :
-;		SommeReelle += x[i] * cos(2 * pi * ((k * i)%M) / M)
-;		SommeImaginaire += x[i] * sin(2 * pi * ((k * i)%M) / M)
-;	return SommeReelle**2 + SommeImaginaire**2
-
-DFT_ModuleAuCarre proc
-	;r0 = #x[0] ;x[0]
-	;r1 = k ;k
-	;r2 = 0 ;i
-	;r3 = 0 ;SommeReelle
-	;r4 = 0 ;SommeImaginaire
-	;r5 = x[i]
-	;r6 = #cos ;TabCos
-	;r7 = #sin ;TabSin
-	;r8 = (k * i)%64
-	mov r9, #64 ;M
-	
-boucle
-	;Si r9 = 64 on a fini notre boucle
-	cmp r9, r2
-	bhs finBoucle
-
-	ldr r5, [r5, r2] ;x[i]
-
-	;Partie Reelle
-	ldr r0, [r6, r8] ;cos(2 * pi * k * i / M)
-	mul r10, r5 ;x[i] * cos(2 * pi * k * i / M)
-	add r3, r10; SommeReelle += X(k)
-
-	;Partie Imaginaire
-	ldr r0, [r7, r8] ;sin(2 * pi * k * i / M)
-	mul r10, r5 ;x[i] * sin(2 * pi * k * i / M)
-	add r4, r10; SommeImaginaire += X(k)
-
-	add r2, #1 ;i++
-
-	;On effectue l'opération de modulo 64 sur r8
-	add r8, r1
-	cmp r8, r9
-	blo boucle
-	sub r8, r9
-
-	b boucle
-
-finBoucle
-
-	;Mise au carré
-	mul r4, r4 ;Partie imaginaire au carré
-	mul r3, r3 ;Partie réelle au carré
-	add r0, r3, r4 ;Je mets le résultat dans le registre de retour
-	
-	bx lr
-	endp
-	END	
-
 
 
 ;Section ROM code (read only) :		
@@ -216,3 +149,77 @@ TabSin
 	DCW	-9512	; 61 0xdad8 -0.29028
 	DCW	-6393	; 62 0xe707 -0.19510
 	DCW	-3212	; 63 0xf374 -0.09802
+	
+
+;Section ROM code (read only) :		
+	area    moncode,code,readonly
+; écrire le code ici		
+
+;def DFT_ModuleAuCarre (r0 = x[0], r1 = k) :
+;	M = 64
+;	SommeReelle = 0
+;	SommeImaginaire = 0
+;	for i in range(M) :
+;		SommeReelle += x[i] * cos(2 * pi * ((k * i)%M) / M)
+;		SommeImaginaire += x[i] * sin(2 * pi * ((k * i)%M) / M)
+;	return SommeReelle**2 + SommeImaginaire**2
+
+	export DFT_ModuleAuCarre
+	
+DFT_ModuleAuCarre proc
+	
+	;On sauvegarde les registres que l'on souhaite utiliser
+	push {r4, r5, r6, r7, r8, r9, r10}
+	
+	;r0 = #x[0]
+	;r1 = k
+	mov r2, #0  ;r2 = i = 0
+	mov r3, #0  ; r3 = Somme Réelle = 0
+	mov r4, #0	; r4 = Somme Imaginaire = 0
+	;r5 = x[i]
+	ldr r6, =TabCos ;r6 = #cos = TabCos
+	ldr r7, =TabSin ;r7 = #sin = TabSin
+	mov r8, #0 ;r8 = (k * i)%64 initialisé à 0
+	mov r9, #64 ;r9 = M = 64
+	
+boucle
+	;Si r9 = 64 on a fini notre boucle
+	cmp r9, r2
+	bls finBoucle
+
+	ldrh r5, [r0, r2, LSL#1] ;x[i]  4+12
+
+	;Partie Reelle
+	ldrsh r10, [r6, r8, LSL#1] ;cos(2 * pi * k * i / M)  1+15
+	mul r10, r5 ;x[i] * cos(2 * pi * k * i / M)  5+27
+	add r3, r10; SommeReelle += X(k) 5+27
+
+	;Partie Imaginaire
+	; todo: faire un mulaccumulate
+	ldrsh r10, [r7, r8, LSL#1] ;sin(2 * pi * k * i / M) 1+15
+	mul r10, r5 ;x[i] * sin(2 * pi * k * i / M) 5+27
+	add r4, r10; SommeImaginaire += X(k) 5+27
+
+	add r2, #1 ;i++
+
+	;On effectue l'opération de modulo 64 sur r8
+	;todo: Faire le modulo avec & 0x3F
+	add r8, r1
+	cmp r8, r9
+	blo boucle
+	sub r8, r9
+
+	b boucle
+
+finBoucle
+
+	;Mise au carré
+	smull r1, r0, r4, r4 ;je stocke r4² dans r1 et r0 (r0 poids fort)
+	smlal r1, r0, r3, r3 ;j'ajoute r3² à ce qu'il y a déjà dans r1, r0 (r0 poids fort)
+	
+	;On restitue les registres que nous avons utilisé
+	pop {r4, r5, r6, r7, r8, r9, r10}
+	
+	bx lr
+	endp
+	END	

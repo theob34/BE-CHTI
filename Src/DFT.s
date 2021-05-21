@@ -191,23 +191,22 @@ boucle
 
 	;Partie Reelle
 	ldrsh r10, [r6, r8, LSL#1] ;cos(2 * pi * k * i / M)  1+15
-	mul r10, r5 ;x[i] * cos(2 * pi * k * i / M)  5+27
-	add r3, r10; SommeReelle += X(k) 5+27
+	mla r3, r10, r5, r3 ;regroupement du mul et du add ci-dessous
+	;mul r10, r5 ;x[i] * cos(2 * pi * k * i / M)  5+27
+	;add r3, r10; SommeReelle += X(k) 5+27
 
 	;Partie Imaginaire
-	; todo: faire un mulaccumulate
 	ldrsh r10, [r7, r8, LSL#1] ;sin(2 * pi * k * i / M) 1+15
-	mul r10, r5 ;x[i] * sin(2 * pi * k * i / M) 5+27
-	add r4, r10; SommeImaginaire += X(k) 5+27
+	mla r4, r10, r5, r4 ;regroupement du mul et du add ci-dessous
+	;mul r10, r5 ;x[i] * sin(2 * pi * k * i / M) 5+27
+	;add r4, r10; SommeImaginaire += X(k) 5+27
 
 	add r2, #1 ;i++
 
 	;On effectue l'opération de modulo 64 sur r8
-	;todo: Faire le modulo avec & 0x3F
+	;r8 && 0x3F
 	add r8, r1
-	cmp r8, r9
-	blo boucle
-	sub r8, r9
+	and r8, #63
 
 	b boucle
 

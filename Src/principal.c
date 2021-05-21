@@ -7,10 +7,15 @@ extern int * LeSignal;
 extern int * LeSignalSinus;
 short int dma_buf[64];
 int fft[64];
+int compteur = 0;
+int score[4] = [0,0,0,0];	//pour compter le score
+int	touche[4] = [0,0,0,0];	//pour compter le nombre de touche. Si supérieur à 12 (12x5 = 60ms) alors on estime que le tir a bien touché la cible
 
-int freq[3] = {17,18,19};
+int freq[6] = {17,18,19,20,23,24};
 
 void Systick_function () {
+	compteur++;
+	
 	Start_DMA1(64);
 	Wait_On_End_Of_DMA1();
 	Stop_DMA1;
@@ -20,11 +25,14 @@ void Systick_function () {
 		fft[i] = DFT_ModuleAuCarre(dma_buf, i);
 	}
 	
-	for(int i = 0; i < 3; i++) {
-		if(fft[freq[i]] >= 0x0100000) {
+	for(int i = 0; i < 6; i++) {
+		if(fft[freq[i]] >= 0x0100000 && touche[i] < touche[i] + 20) {
+			touche[i] = compteur ;
+			score[i] ++;
 			StartSon();
 		}
 	}
+	
 
 }
 
@@ -40,7 +48,7 @@ CLOCK_Configure();
 
 //Configuration du timer
 Systick_Period_ff(360000) ;
-Systick_Prio_IT(1, Systick_function) ;
+Systick_Prio_IT(3, Systick_function) ;
 SysTick_On ;
 SysTick_Enable_IT ;	
 	

@@ -26,7 +26,7 @@ SortieSon	dcw	0
 	area    moncode,code,readonly
 ; crire le code ici		
 
-	export timer4_callback
+	export callback_son
 	export StartSon
 
 StartSon proc
@@ -37,7 +37,7 @@ StartSon proc
 	endp
 
 
-timer4_callback proc
+callback_son proc
 ; r0 = Son
 ; r1 = Indice actuel
 ; r2 = Adresse indice actuel

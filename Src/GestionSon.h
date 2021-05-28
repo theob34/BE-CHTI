@@ -2,7 +2,7 @@
 #define GestionSon
 
 //Fonction qui permet de jouer le son
-void timer4_callback(void);
+void callback_son(void);
 
 //Fonction qui permet de lancer le son
 void StartSon(void);

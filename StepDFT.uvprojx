@@ -451,6 +451,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>ModuleMallette</GroupName>
+          <Files>
+            <File>
+              <FileName>Affichage_Valise.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Src\Affichage_Valise.h</FilePath>
+            </File>
+            <File>
+              <FileName>affichage_valise.o</FileName>
+              <FileType>3</FileType>
+              <FilePath>.\Src\affichage_valise.o</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
       </Groups>
@@ -896,6 +911,21 @@
               <FileName>GestionSon.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\Src\GestionSon.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ModuleMallette</GroupName>
+          <Files>
+            <File>
+              <FileName>Affichage_Valise.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Src\Affichage_Valise.h</FilePath>
+            </File>
+            <File>
+              <FileName>affichage_valise.o</FileName>
+              <FileType>3</FileType>
+              <FilePath>.\Src\affichage_valise.o</FilePath>
             </File>
           </Files>
         </Group>
@@ -1414,6 +1444,21 @@
               <FileName>GestionSon.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\Src\GestionSon.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ModuleMallette</GroupName>
+          <Files>
+            <File>
+              <FileName>Affichage_Valise.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Src\Affichage_Valise.h</FilePath>
+            </File>
+            <File>
+              <FileName>affichage_valise.o</FileName>
+              <FileType>3</FileType>
+              <FilePath>.\Src\affichage_valise.o</FilePath>
             </File>
           </Files>
         </Group>
